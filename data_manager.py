@@ -2,11 +2,11 @@ import requests
 import os
 
 base_url = "https://api.sheety.co"
-USERNAME = "61106da2c60807b4989aaf143df06f7d"
+USERNAME = os.environ.get("USERNAME")
 SHEET1 = "prices"
 SHEET2 = "users"
 PROJECT_NAME = "flight"
-BEARER = "LIM#ej4&CL(2OW4(3fVG%+33Hl1xD%9n"
+BEARER = os.environ.get("BEARER")
 PRICES_ENDPOINT = f"{base_url}/{USERNAME}/{PROJECT_NAME}/{SHEET1}"
 USERS_ENDPOINT = f"{base_url}/{USERNAME}/{PROJECT_NAME}/{SHEET2}"
 

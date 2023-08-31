@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from data_manager import DataManager
-from flight_search import FlightSearch, check_flights
+from flight_search import FlightSearch
 from notification_manager import NotificationManager
 
 ORIGIN_CITY_IATA = "LON"
@@ -28,7 +28,7 @@ tomorrow = datetime.now() + timedelta(days=1)
 six_month_from_today = datetime.now() + timedelta(days=6 * 30)
 
 for destination_code in destinations:
-    flight = check_flights(
+    flight = flight_search.check_flights(
         ORIGIN_CITY_IATA,
         destination_code,
         from_time=tomorrow,
