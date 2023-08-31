@@ -1,15 +1,29 @@
 import requests
+import os
 
-SHEETY_PRICES_ENDPOINT = "https://api.sheety.co/61106da2c60807b4989aaf143df06f7d/flightDeals/prices"
+base_url = "https://api.sheety.co"
+USERNAME = "61106da2c60807b4989aaf143df06f7d"
+SHEET1 = "prices"
+SHEET2 = "users"
+PROJECT_NAME = "flight"
+BEARER = "LIM#ej4&CL(2OW4(3fVG%+33Hl1xD%9n"
+PRICES_ENDPOINT = f"{base_url}/{USERNAME}/{PROJECT_NAME}/{SHEET1}"
+USERS_ENDPOINT = f"{base_url}/{USERNAME}/{PROJECT_NAME}/{SHEET2}"
+
+headers = {
+    "Authorization": f"Bearer {BEARER}",
+    "Content-Type": "application/json",
+}
 
 
 class DataManager:
 
     def __init__(self):
+        self.customer_data = None
         self.destination_data = {}
 
     def get_destination_data(self):
-        response = requests.get(url=SHEETY_PRICES_ENDPOINT)
+        response = requests.get(url=PRICES_ENDPOINT, headers=headers)
         data = response.json()
         self.destination_data = data["prices"]
         return self.destination_data
@@ -22,7 +36,14 @@ class DataManager:
                 }
             }
             response = requests.put(
-                url=f"{SHEETY_PRICES_ENDPOINT}/{city['id']}",
+                url=f"{PRICES_ENDPOINT}/{city['id']}",
                 json=new_data
             )
             print(response.text)
+
+    def get_customer_emails(self):
+        customers_endpoint = USERS_ENDPOINT
+        response = requests.get(url=customers_endpoint, headers=headers)
+        data = response.json()
+        self.customer_data = data["users"]
+        return self.customer_data
